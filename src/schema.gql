@@ -3,28 +3,272 @@
 # ------------------------------------------------------
 
 type Collaborator {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  cpf: String!
+  createdAt: DateTime!
+  deletedAt: DateTime
+  id: String!
+  key: String!
+  nome: String!
+  updatedAt: DateTime
+}
+
+type CollaboratorAggregateGroupBy {
+  cpf: String
+  createdAt: DateTime
+  deletedAt: DateTime
+  key: String
+  nome: String
+  updatedAt: DateTime
+}
+
+type CollaboratorConnection {
+  """Array of nodes."""
+  nodes: [Collaborator!]!
+
+  """Paging information"""
+  pageInfo: OffsetPageInfo!
+
+  """Fetch total count of records"""
+  totalCount: Int!
+}
+
+type CollaboratorCountAggregate {
+  cpf: Int
+  createdAt: Int
+  deletedAt: Int
+  key: Int
+  nome: Int
+  updatedAt: Int
+}
+
+input CollaboratorDeleteFilter {
+  and: [CollaboratorDeleteFilter!]
+  cpf: StringFieldComparison
+  createdAt: DateFieldComparison
+  deletedAt: DateFieldComparison
+  key: StringFieldComparison
+  nome: StringFieldComparison
+  or: [CollaboratorDeleteFilter!]
+  updatedAt: DateFieldComparison
+}
+
+type CollaboratorDeleteResponse {
+  cpf: String
+  createdAt: DateTime
+  deletedAt: DateTime
+  id: String
+  key: String
+  nome: String
+  updatedAt: DateTime
+}
+
+input CollaboratorFilter {
+  and: [CollaboratorFilter!]
+  cpf: StringFieldComparison
+  createdAt: DateFieldComparison
+  deletedAt: DateFieldComparison
+  key: StringFieldComparison
+  nome: StringFieldComparison
+  or: [CollaboratorFilter!]
+  updatedAt: DateFieldComparison
+}
+
+type CollaboratorMaxAggregate {
+  cpf: String
+  createdAt: DateTime
+  deletedAt: DateTime
+  key: String
+  nome: String
+  updatedAt: DateTime
+}
+
+type CollaboratorMinAggregate {
+  cpf: String
+  createdAt: DateTime
+  deletedAt: DateTime
+  key: String
+  nome: String
+  updatedAt: DateTime
+}
+
+input CollaboratorSort {
+  direction: SortDirection!
+  field: CollaboratorSortFields!
+  nulls: SortNulls
+}
+
+enum CollaboratorSortFields {
+  cpf
+  createdAt
+  deletedAt
+  key
+  nome
+  updatedAt
+}
+
+input CollaboratorUpdateFilter {
+  and: [CollaboratorUpdateFilter!]
+  cpf: StringFieldComparison
+  createdAt: DateFieldComparison
+  deletedAt: DateFieldComparison
+  key: StringFieldComparison
+  nome: StringFieldComparison
+  or: [CollaboratorUpdateFilter!]
+  updatedAt: DateFieldComparison
 }
 
 input CreateCollaboratorInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  cpf: String!
+  key: String!
+  nome: String!
+}
+
+input CreateManyCollaboratorsInput {
+  """Array of records to create"""
+  collaborators: [CreateCollaboratorInput!]!
+}
+
+input CreateOneCollaboratorInput {
+  """The record to create"""
+  collaborator: CreateCollaboratorInput!
+}
+
+input DateFieldComparison {
+  between: DateFieldComparisonBetween
+  eq: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  is: Boolean
+  isNot: Boolean
+  lt: DateTime
+  lte: DateTime
+  neq: DateTime
+  notBetween: DateFieldComparisonBetween
+  notIn: [DateTime!]
+}
+
+input DateFieldComparisonBetween {
+  lower: DateTime!
+  upper: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DeleteManyCollaboratorsInput {
+  """Filter to find records to delete"""
+  filter: CollaboratorDeleteFilter!
+}
+
+type DeleteManyResponse {
+  """The number of records deleted."""
+  deletedCount: Int!
+}
+
+input DeleteOneCollaboratorInput {
+  """The id of the record to delete."""
+  id: ID!
 }
 
 type Mutation {
-  createCollaborator(createCollaboratorInput: CreateCollaboratorInput!): Collaborator!
-  removeCollaborator(id: Int!): Collaborator!
-  updateCollaborator(updateCollaboratorInput: UpdateCollaboratorInput!): Collaborator!
+  createManyCollaborators(input: CreateManyCollaboratorsInput!): [Collaborator!]!
+  createOneCollaborator(input: CreateOneCollaboratorInput!): Collaborator!
+  deleteManyCollaborators(input: DeleteManyCollaboratorsInput!): DeleteManyResponse!
+  deleteOneCollaborator(input: DeleteOneCollaboratorInput!): CollaboratorDeleteResponse!
+  updateManyCollaborators(input: UpdateManyCollaboratorsInput!): UpdateManyResponse!
+  updateOneCollaborator(input: UpdateOneCollaboratorInput!): Collaborator!
+}
+
+type OffsetPageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+}
+
+input OffsetPaging {
+  """Limit the number of records returned"""
+  limit: Int
+
+  """Offset to start returning records from"""
+  offset: Int
 }
 
 type Query {
-  collaborator(id: Int!): Collaborator!
-  collaborators: [Collaborator!]!
+  collaborator(
+    """The id of the record to find."""
+    id: ID!
+  ): Collaborator
+  collaborators(
+    """Specify to filter the records returned."""
+    filter: CollaboratorFilter = {}
+
+    """Limit or page results."""
+    paging: OffsetPaging = {limit: 10}
+
+    """Specify to sort results."""
+    sorting: [CollaboratorSort!] = []
+  ): CollaboratorConnection!
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+input StringFieldComparison {
+  eq: String
+  gt: String
+  gte: String
+  iLike: String
+  in: [String!]
+  is: Boolean
+  isNot: Boolean
+  like: String
+  lt: String
+  lte: String
+  neq: String
+  notILike: String
+  notIn: [String!]
+  notLike: String
 }
 
 input UpdateCollaboratorInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  cpf: String
+  deletedAt: DateTime!
+  id: ID
+  key: String
+  nome: String
+}
+
+input UpdateManyCollaboratorsInput {
+  """Filter used to find fields to update"""
+  filter: CollaboratorUpdateFilter!
+
+  """The update to apply to all records found using the filter"""
+  update: UpdateCollaboratorInput!
+}
+
+type UpdateManyResponse {
+  """The number of records updated."""
+  updatedCount: Int!
+}
+
+input UpdateOneCollaboratorInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateCollaboratorInput!
 }
